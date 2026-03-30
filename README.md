@@ -32,3 +32,34 @@
 ### 1. Install dependencies
 ```bash
 pip install psutil
+
+Argument,Description
+--summary,Show live summary dashboard every 5 seconds
+--defensive,Enable defensive mode (kill/quarantine on CRITICAL)
+--live,Disable dry-run (execute real actions)
+--dry-run,Force dry-run mode (default)
+--threshold LEVEL,Minimum severity: LOW | MEDIUM | HIGH | CRITICAL
+--watch DIR,Add extra directory to watch
+--no-sqlite,Disable SQLite logging
+--interval N,File scan interval in seconds
+--ptrace-interval N,ptrace scan interval in seconds
+
+
+⚠️ Requirements
+
+Linux (any modern distribution)
+Root privileges (recommended for full visibility)
+The tool is provided as a pre-built standalone executable
+
+Note: No Python or additional packages needed on the target system.
+
+
+📦 Part of OwlSec Toolkit
+This tool is part of the OwlSec suite — a collection of 300+ security and privacy tools.
+🔗 owlsec.org
+
+©️ License
+MIT License — © Khaled S. Haddad
+Tools are distributed as pre-built executables. Source code is proprietary
+
+
