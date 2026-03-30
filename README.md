@@ -1,65 +1,82 @@
-## 📌 Overview
-**OWarning** is a lightweight EDR-Lite tool designed to detect credential dumping attempts on Linux systems in real-time. It monitors file creation/modification in staging directories, correlates processes with suspicious files, detects ptrace/TracerPid activity on sensitive processes, and identifies direct /proc/<pid>/mem access.
+📌 Overview
 
----
-## 🛡️ Detection Capabilities
-- **File-based detection** — Suspicious dump files (core, .dmp, shadow-like names)
-- **Process correlation** — Links newly created files to their creating processes
-- **ptrace / TracerPid monitoring** — Detects debugging/tracing on sensitive processes (sshd, sudo, gnome-keyring, etc.)
-- **ProcFS access monitoring** — /proc/<pid>/mem and /proc/<pid>/maps access
-- **Command-line pattern matching** — gdb -p, gcore, dd if=/proc, etc.
-- **Scoring engine** with severity levels (LOW → CRITICAL)
+OWarning is an advanced EDR-lite security tool designed to detect early signs of credential dumping attacks on Linux systems. It monitors file activity, process behavior, and ptrace interactions to identify suspicious operations in real-time.
 
----
-## 🖥️ Features
-- Real-time inotify monitoring on `/tmp`, `/var/tmp`, `/dev/shm`
-- Live process snapshot + open files correlation
-- SQLite + JSONL + plain text logging
-- Optional defensive mode (quarantine + process kill on CRITICAL)
-- Clean colored terminal output + optional live summary dashboard
-- Low resource footprint
+| Element                    | Description                                           |
+| -------------------------- | ----------------------------------------------------- |
+| **Real-Time Alerts**       | Displays detected threats with severity levels        |
+| **Live Summary Dashboard** | Shows total alerts, severity distribution, and uptime |
+| **Rule Hits Section**      | Detailed breakdown of triggered detection rules       |
+| **ptrace Findings**        | Identifies processes attempting memory tracing        |
+| **Log Output**             | Continuous monitoring logs and activity stream        |
 
----
-## ⚙️ Requirements
-- Linux (x86_64 / aarch64)
-- Python 3.8+
-- `psutil` package (`pip install psutil`)
-- Root or sufficient privileges recommended for full ptrace and /proc access
+⚙️ Requirements
+Linux (any distro)
+Root privileges (recommended for full monitoring)
+Optional: psutil for enhanced process tracking
+Pre-built executable (no Python installation required)
 
----
-## 🚀 Quick Start
-
-### 1. Install dependencies
-```bash
-pip install psutil
-
-Argument,Description
---summary,Show live summary dashboard every 5 seconds
---defensive,Enable defensive mode (kill/quarantine on CRITICAL)
---live,Disable dry-run (execute real actions)
---dry-run,Force dry-run mode (default)
---threshold LEVEL,Minimum severity: LOW | MEDIUM | HIGH | CRITICAL
---watch DIR,Add extra directory to watch
---no-sqlite,Disable SQLite logging
---interval N,File scan interval in seconds
---ptrace-interval N,ptrace scan interval in seconds
+| Element                    | Description                                           |
+| -------------------------- | ----------------------------------------------------- |
+| **Real-Time Alerts**       | Displays detected threats with severity levels        |
+| **Live Summary Dashboard** | Shows total alerts, severity distribution, and uptime |
+| **Rule Hits Section**      | Detailed breakdown of triggered detection rules       |
+| **ptrace Findings**        | Identifies processes attempting memory tracing        |
+| **Log Output**             | Continuous monitoring logs and activity stream        |
 
 
-⚠️ Requirements
+🚀 Usage
 
-Linux (any modern distribution)
-Root privileges (recommended for full visibility)
-The tool is provided as a pre-built standalone executable
+Run the tool directly:
 
-Note: No Python or additional packages needed on the target system.
+./OWarning
 
 
+
+Basic Options
+--summary → Enable live dashboard
+--defensive → Enable active response (kill/quarantine)
+--dry-run → Simulation mode (default)
+--live → Execute real defensive actions
+--watch DIR → Add custom directory to monitor
+
+
+🧠 Detection Capabilities
+
+OWarning uses multiple detection layers:
+
+File Monitoring
+Detects dump files (core, mem, shadow, etc.)
+Monitors suspicious directories (/tmp, /dev/shm)
+Process Analysis
+Identifies tools like gdb, strace, dd
+Detects suspicious command patterns
+ptrace Detection
+Flags processes tracing sensitive targets
+/proc Abuse Detection
+Monitors access to /proc/<pid>/mem and sensitive files
+Correlation Engine
+Links suspicious files to originating processes
+🚨 Severity Levels
+Level	Description
+CRITICAL	Immediate threat detected
+HIGH	Strong indicators of compromise
+MEDIUM	Suspicious activity
+LOW	Informational
+🛡️ Defensive Actions
+
+When enabled:
+
+Kill Process → Terminates malicious processes
+Quarantine File → Moves suspicious files to safe location
+Dry-Run Mode → Logs actions without executing (default)
 📦 Part of OwlSec Toolkit
-This tool is part of the OwlSec suite — a collection of 300+ security and privacy tools.
+
+This tool is part of the OwlSec ecosystem — a collection of 300+ cybersecurity tools.
+
 🔗 owlsec.org
 
 ©️ License
+
 MIT License — © Khaled S. Haddad
-Tools are distributed as pre-built executables. Source code is proprietary
-
-
+Distributed as a pre-built executable. Source code is proprietary.
